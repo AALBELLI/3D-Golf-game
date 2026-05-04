@@ -18,6 +18,8 @@ public class BallDragController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private Slider powerBar;
+    [SerializeField] private Image powerFillImage;
+    
 
     private Vector3 dragStartWorld;
     private Vector3 dragCurrentWorld;
@@ -71,10 +73,22 @@ public class BallDragController : MonoBehaviour
 
         float powerPercent = Mathf.Clamp01(dragVector.magnitude / maxDragDistance);
 
+    
+
         if (powerBar != null)
         {
             powerBar.value = powerPercent;
         }
+
+Color low = new Color(0.2f, 1f, 0.2f);   // green (low power)
+Color high = new Color(1f, 0.2f, 0.2f);  // red (high power)
+
+if (powerFillImage != null)
+{
+    powerFillImage.color = Color.Lerp(low, high, powerPercent);
+}
+
+
         }
     }
 
@@ -129,6 +143,11 @@ public class BallDragController : MonoBehaviour
             {
         powerBar.value = 0f;
             }
+
+if (powerFillImage != null)
+{
+    powerFillImage.color = new Color(0.2f, 1f, 0.2f); // reset to green
+}
         
     }
 
